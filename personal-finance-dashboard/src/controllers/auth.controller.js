@@ -46,4 +46,27 @@ const login = async (req, res) => {
 
 };
 
-export { signup, login };
+const getMe = async (req, res) => {
+  try {
+
+    // comes from protect middleware
+    const userId = req.user.id;
+
+    const user = await authService.getLoggedInUser(userId);
+
+    res.json({
+      success: true,
+      user,
+    });
+
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+
+export { signup, login,getMe };

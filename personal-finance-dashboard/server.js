@@ -1,3 +1,4 @@
+
 import dns from "dns";
 dns.setDefaultResultOrder("ipv4first");
 
@@ -22,7 +23,7 @@ async function startServer() {
 
     try {
 
-        await dbConnectionCheck();
+    await dbConnectionCheck();
 
         app.listen(PORT, () =>
             console.log(`Server running on port ${PORT}`)

@@ -1,9 +1,17 @@
 import { supabase } from "../configs/supabase.config.js";
 
+/* ---------------- CREATE BILL ---------------- */
 export const createBill = async (billData) => {
+
   const { data, error } = await supabase
     .from("bill_reminders")
-    .insert([billData])
+    .insert([{
+      user_id: billData.user_id,
+      name: billData.name,
+      amount: billData.amount,
+      due_date: billData.due_date,
+      paid: billData.paid ?? false,
+    }])
     .select()
     .single();
 
@@ -12,7 +20,10 @@ export const createBill = async (billData) => {
   return data;
 };
 
+
+/* ---------------- GET BILLS ---------------- */
 export const getBillsByUserId = async (userId) => {
+
   const { data, error } = await supabase
     .from("bill_reminders")
     .select("*")
@@ -24,14 +35,17 @@ export const getBillsByUserId = async (userId) => {
   return data;
 };
 
-export const updateBillStatus = async (
+
+/* ---------------- UPDATE PAID STATUS ---------------- */
+export const updateBillPaidStatus = async (
   userId,
   billId,
-  status
+  paid
 ) => {
+
   const { data, error } = await supabase
     .from("bill_reminders")
-    .update({ status })
+    .update({ paid })
     .eq("id", billId)
     .eq("user_id", userId)
     .select()
@@ -42,7 +56,10 @@ export const updateBillStatus = async (
   return data;
 };
 
+
+/* ---------------- DELETE BILL ---------------- */
 export const deleteBill = async (userId, billId) => {
+
   const { error } = await supabase
     .from("bill_reminders")
     .delete()
@@ -50,4 +67,6 @@ export const deleteBill = async (userId, billId) => {
     .eq("user_id", userId);
 
   if (error) throw new Error(error.message);
+
+  return true;
 };

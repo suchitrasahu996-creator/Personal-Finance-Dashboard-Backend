@@ -6,7 +6,7 @@ import transactionRoutes from "./routes/transaction.routes.js";
 import goalRoutes from "./routes/goal.routes.js";
 import billRoutes from "./routes/bill.routes.js"
 import budgetRoutes from "./routes/budget.routes.js"
-import aiRoutes from "./routes/aiRoutes.js";
+
 const app = express();
 
 app.use(cors());
@@ -17,7 +17,7 @@ app.use("/api/transactions", transactionRoutes);
 app.use("/api/goals", goalRoutes);
 app.use("/api/bill", billRoutes);
 app.use("/api/budget", budgetRoutes);
-app.use("/api/ai", aiRoutes);
+
 app.use((req, res) => {
     res.status(404).json({
         success: false,

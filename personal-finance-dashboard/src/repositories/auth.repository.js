@@ -25,8 +25,22 @@ const findUserByEmail = async (email) => {
 
     return data;
 };
+const findUserById = async (id) => {
+
+    const { data, error } = await supabase
+        .from("users")
+        .select("id, name, email, role")
+        .eq("id", id)
+        .single();
+
+    if (error) throw error;
+
+    return data;
+};
+
 
 export default {
     createUser,
-    findUserByEmail
+    findUserByEmail,
+      findUserById
 };
